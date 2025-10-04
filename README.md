@@ -1,6 +1,4 @@
 # Arch Install Script (Arch + KDE)
----
-
 ## Pre-Installation Checks
 
 ### Verify Boot Mode (UEFI)
