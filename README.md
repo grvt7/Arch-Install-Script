@@ -1,6 +1,7 @@
-# Arch Linux Installation Script - Updated 2025
-**Updated with latest Arch Wiki recommendations**
-**Customized for: Ethernet connection, India location**
+# Arch Linux Install Script (Manual) (Arch + KDE)
+---
+**Updated with latest Arch Wiki recommendations** --
+**Customized for: Ethernet connection, India**
 
 ---
 
@@ -82,6 +83,7 @@ mkfs.ext4 /dev/nvme0n1p3
 mkfs.ext4 /dev/nvme0n1p4
 
 # Verify formatting
+lsblk
 lsblk -f
 ```
 
