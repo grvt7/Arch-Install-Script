@@ -48,7 +48,7 @@ lsblk
 ```bash
 cgdisk /dev/nvme0n1
 	# Partition 1: EFI Boot
-	new -> 1024MiB -> EF00 (boot) -> boot
+	new -> 1GiB -> EF00 (boot) -> boot
 	
 	# Partition 2: Swap
 	new -> 16GiB -> 8200 (swap) -> swap
