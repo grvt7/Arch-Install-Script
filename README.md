@@ -244,8 +244,9 @@ hwclock --systohc
 
 ### Set Hostname
 ```bash
-# Create hostname file
-echo "hostname" > /etc/hostname
+# Create hostname file (replace `hostname` with your actual username)
+# Dont add backticks
+echo `hostname` > /etc/hostname
 ```
 
 ### Configure Hosts File
