@@ -221,11 +221,11 @@ en_US.UTF-8 UTF-8
 # Generate locales
 locale-gen
 
-# Set system locale (choose en_US or en_IN)
-echo "LANG=en_IN.UTF-8" > /etc/locale.conf
+# Set system locale
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 # Export for current session
-export LANG=en_IN.UTF-8
+export LANG=en_US.UTF-8
 ```
 
 ### Set Timezone
