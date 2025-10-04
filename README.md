@@ -36,7 +36,8 @@ fdisk -l
 gdisk /dev/nvme0n1
 	command : x (expert)
 	expert : z (zap – drive)
-	blank mbr : hell yeah
+	clear GPT: yes
+	blank MBR : yes
 ```
 
 ### Verify Disk is Clean
