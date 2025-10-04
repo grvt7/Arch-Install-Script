@@ -140,6 +140,7 @@ pacstrap -K /mnt base linux linux-firmware base-devel
 
 # Note: Intel microcode recommended but not mandatory
 # Add 'intel-ucode' or 'amd-ucode' if you want CPU microcode updates
+# I do this later in chroot
 ```
 
 ---
@@ -209,6 +210,24 @@ nano /etc/pacman.conf
 pacman -Sy
 ```
 
+### Configure Localization
+```bash
+# Edit locale.gen
+nano /etc/locale.gen
+
+# Uncomment:
+en_US.UTF-8 UTF-8
+
+# Generate locales
+locale-gen
+
+# Set system locale (choose en_US or en_IN)
+echo "LANG=en_IN.UTF-8" > /etc/locale.conf
+
+# Export for current session
+export LANG=en_IN.UTF-8
+```
+
 ### Set Timezone
 ```bash
 # List available timezones
@@ -222,28 +241,10 @@ ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
 hwclock --systohc
 ```
 
-### Configure Localization
-```bash
-# Edit locale.gen
-nano /etc/locale.gen
-# Uncomment these locales:
-# en_US.UTF-8 UTF-8
-# en_IN.UTF-8 UTF-8
-
-# Generate locales
-locale-gen
-
-# Set system locale (choose en_US or en_IN)
-echo "LANG=en_IN.UTF-8" > /etc/locale.conf
-
-# Export for current session
-export LANG=en_IN.UTF-8
-```
-
 ### Set Hostname
 ```bash
 # Create hostname file
-echo "overlord" > /etc/hostname
+echo "hostname" > /etc/hostname
 ```
 
 ### Configure Hosts File
@@ -253,10 +254,11 @@ echo "overlord" > /etc/hostname
 # Needed for: hostname resolution, network services, avoiding delays
 nano /etc/hosts
 
+# Don't add the backticks
 # Add these lines:
 127.0.0.1    localhost
 ::1          localhost
-127.0.1.1    overlord.localdomain overlord
+127.0.1.1    `hostname`.localdomain `hostname`
 
 # Save and exit
 ```
@@ -323,7 +325,6 @@ nano /boot/loader/entries/arch.conf
 title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
-options root=PARTUUID=PLACEHOLDER rw
 
 # Save and exit (Ctrl+O, Enter, Ctrl+X)
 ```
@@ -335,29 +336,6 @@ echo "options root=PARTUUID=$(blkid -s PARTUUID -o value /dev/nvme0n1p3) rw" >> 
 
 # Verify the complete boot entry
 cat /boot/loader/entries/arch.conf
-
-# Now edit boot entry to add additional kernel parameters
-nano /boot/loader/entries/arch.conf
-
-# Add nvidia-drm.modeset=1 to the options line (REQUIRED for hybrid graphics):
-# Change: options root=PARTUUID=xxx-xxx-xxx rw
-# To:     options root=PARTUUID=xxx-xxx-xxx rw nvidia-drm.modeset=1
-
-# OPTIONAL - For ASUS ROG laptops (improves ACPI/hardware compatibility):
-# If you experience issues with function keys, fan control, or GPU power management,
-# add these ACPI parameters after nvidia-drm.modeset=1:
-# acpi_osi=! acpi_osi="Windows 2020"
-#
-# Full line would be:
-# options root=PARTUUID=xxx-xxx-xxx rw nvidia-drm.modeset=1 acpi_osi=! acpi_osi="Windows 2020"
-#
-# What these do:
-# - acpi_osi=! clears all OS identifiers
-# - acpi_osi="Windows 2020" tells BIOS you're Windows 10 2004+
-# - Enables Windows-optimized ACPI features (function keys, fan curves, etc.)
-# - Reference: https://wiki.archlinux.org/title/Laptop/ASUS
-#
-# Save and exit
 ```
 
 ### Install CPU Microcode
@@ -482,6 +460,32 @@ nvidia-modprobe
 # systemctl enable nvidia-suspend.service
 # systemctl enable nvidia-resume.service
 # systemctl enable nvidia-hibernate.service
+```
+
+### Update Bootloader Entry
+```bash
+# Now edit boot entry to add additional kernel parameters
+nano /boot/loader/entries/arch.conf
+
+# Add nvidia-drm.modeset=1 to the options line (REQUIRED for hybrid graphics):
+Change: options root=PARTUUID=xxx-xxx-xxx rw
+To:     options root=PARTUUID=xxx-xxx-xxx rw nvidia-drm.modeset=1
+
+# OPTIONAL - For ASUS ROG laptops (improves ACPI/hardware compatibility):
+# If you experience issues with function keys, fan control, or GPU power management,
+# add these ACPI parameters after nvidia-drm.modeset=1:
+# acpi_osi=! acpi_osi="Windows 2020"
+#
+# Full line would be:
+options root=PARTUUID=xxx-xxx-xxx rw nvidia-drm.modeset=1 acpi_osi=! acpi_osi="Windows 2020"
+#
+# What these do:
+# - acpi_osi=! clears all OS identifiers
+# - acpi_osi="Windows 2020" tells BIOS you're Windows 10 2004+
+# - Enables Windows-optimized ACPI features (function keys, fan curves, etc.)
+# - Reference: https://wiki.archlinux.org/title/Laptop/ASUS
+#
+# Save and exit
 ```
 
 ### Configure mkinitcpio for NVIDIA
