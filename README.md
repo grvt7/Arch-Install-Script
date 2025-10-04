@@ -1,8 +1,4 @@
-# Arch Linux Install Script (Manual) (Arch + KDE)
----
-**With Arch Wiki recommendations** --
-**Customized for: Ethernet connection, India**
-
+# Arch Install Script (Arch + KDE)
 ---
 
 ## Pre-Installation Checks
@@ -664,27 +660,6 @@ sudo systemctl enable plocate-updatedb.timer
 ```
 
 ---
-
-## Summary of Key Changes from Original
-
-### ✅ Updates Made:
-1. **Reflector with India mirrors** - Optimized for your location
-2. **Ethernet-only setup** - Removed WiFi configuration
-3. **Minimal base install** - Only base, linux, linux-firmware, base-devel
-4. **systemctl daemon-reload** - Added before chroot
-5. **efivarfs mount** - Added with error suppression explanation
-6. **Hosts file** - Explained purpose and added configuration
-7. **Separate mkdir** - Before mount commands as requested
-8. **Updated NVIDIA hook** - Targets nvidia-dkms + linux with explanation
-9. **NetworkManager install moved** - After chroot like original
-10. **Loader.conf kept** - As optional but documented
-
-### 📋 All Your Original Features Preserved:
-- cgdisk partitioning workflow
-- Your exact partition sizes
-- NVIDIA + Intel hybrid setup
-- KDE Plasma desktop
-- All custom settings and preferences
 
 ### 📚 References:
 - [Arch Installation Guide](https://wiki.archlinux.org/title/Installation_guide)
