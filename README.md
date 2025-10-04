@@ -1,6 +1,6 @@
 # Arch Linux Install Script (Manual) (Arch + KDE)
 ---
-**Updated with latest Arch Wiki recommendations** --
+**With Arch Wiki recommendations** --
 **Customized for: Ethernet connection, India**
 
 ---
