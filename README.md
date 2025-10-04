@@ -139,7 +139,8 @@ cat /etc/pacman.d/mirrorlist
 
 ```bash
 # Install minimal base system (as per your preference)
-pacstrap -K /mnt base linux linux-firmware base-devel
+pacstrap -K /mnt base linux linux-firmware base-devel man-db man-pages texinfo
+
 
 # Note: Intel microcode recommended but not mandatory
 # Add 'intel-ucode' or 'amd-ucode' if you want CPU microcode updates
@@ -613,7 +614,7 @@ startx
 ### Install KDE Plasma Desktop Environment
 ```bash
 # Install KDE Plasma and applications
-sudo pacman -S plasma kde-applications sddm firefox git neofetch htop
+sudo pacman -S plasma kde-applications sddm firefox git fastfetch htop btop nvtop
 
 # Enable display manager
 sudo systemctl enable sddm.service
@@ -625,6 +626,16 @@ reboot
 ---
 
 ## Additional Recommendations (Post-Install)
+
+### Add the essentials
+```bash
+sudo pacman -S \
+which tree wget curl \
+tar unzip zip p7zip unrar xz zstd \
+openssh net-tools \
+cmake \
+vlc
+```
 
 ### Enable Time Synchronization
 ```bash
